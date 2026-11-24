@@ -11,7 +11,6 @@ const Home = () => {
 
     return (
         <Card
-            className="hero-content"
             sx={{
                 maxWidth: 600,
                 margin: "auto",
@@ -19,12 +18,12 @@ const Home = () => {
             }}
         >
             <Typography
-                variant="h6"
-                component="h1"
+                variant="h2"
                 sx={{
-                    px: 2.5,
+                    px: 10,
                     pt: 3,
                     pb: 2,
+
                     color: theme.custom?.openTitle || theme.palette.primary.main,
                 }}
             >
