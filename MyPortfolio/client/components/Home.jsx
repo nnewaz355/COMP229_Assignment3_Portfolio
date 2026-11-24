@@ -1,4 +1,5 @@
 // src/components/Home.jsx or src/pages/Home.jsx
+// This file is deprecated and will be removed in future versions. Please use the new Home component located at MyPortfolio/client/core/Home.jsx for the latest implementation of the Home page.
 
 // This portfolio has been created based on my resume from the Employment Preparation course at Centennial College. The portfolio is designed to showcase my skills, projects, and experience as a software developer. It serves as a digital representation of my professional profile, allowing potential employers and collaborators to learn more about me and my work.
 import React from 'react';
