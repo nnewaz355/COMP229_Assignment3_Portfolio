@@ -1,22 +1,150 @@
-export default function Education() {
-    return (
-        <div>
-            <h1>Education:</h1>
-            <h2>Software Engineering Technology (Co-op) Advanced Diploma</h2>
-            <strong>Centennial College, Scarborough, ON</strong>
-            <p><emphasis>September 2025 - Present</emphasis></p>
-            <h3>Relevant Courses:</h3>
-            <ul>
-                <li>Programming (Python)</li>
-                <li>Database Concepts (SQL)</li>
-                <li>Unix/Linux OS (Bash)</li>
-                <li>Software Requirements Engineering (SRS)</li>
-                <li>C# Programming</li>
-                <li>Web Interface Design (HTML, CSS)</li>
-                <li>Web Application Development</li>
-                <li>Java Programming</li>
-                <li>Software Engineering Fundamentals</li>
-            </ul>
-        </div>
-    );
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { create } from '../qualification/api-qualification.js';
+import academic from '../src/assets/academic.jfif';
+import '../src/education.css';
+import { Card, CardContent, Typography, TextField, Button, Grid } from '@mui/material';
+import '@fontsource/roboto/400.css';
+
+export default function Qualification() {
+  const [values, setValues] = useState({
+    title: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    completion: "",
+    description: "",
+  });
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const submitForm = async (data) => {
+    console.log(data);
+    try {
+      await create(data);
+      // Reset form values after successful submission
+      setValues({
+        title: "",
+        firstname: "",
+        lastname: "",
+        email: "",
+        completion: "",
+        description: "",
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  };
+
+  const handleChange = (name) => (event) => {
+    setValues({ ...values, [name]: event.target.value });
+  };
+
+  return (
+    <>
+      <Typography variant="h4" align="center" className="worksTitle">Academic Qualification</Typography>
+      <img src={academic} alt="Academic Qualification" className="worksImg" style={{ width: '100%', height: 'auto' }} />
+      <br /><br />
+      
+      <Card>
+        <CardContent>
+          <form onSubmit={handleSubmit(submitForm)}>
+            <Grid container spacing={2}>
+              {/* Title */}
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Title"
+                  variant="outlined"
+                  {...register("title", { required: "Title is required" })}
+                  value={values.title}
+                  onChange={handleChange('title')}
+                  error={!!errors.title}
+                  helperText={errors.title ? errors.title.message : ""}
+                />
+              </Grid>
+
+              {/* First Name */}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="First Name"
+                  variant="outlined"
+                  {...register("firstname", { required: "First name is required" })}
+                  value={values.firstname}
+                  onChange={handleChange('firstname')}
+                  error={!!errors.firstname}
+                  helperText={errors.firstname ? errors.firstname.message : ""}
+                />
+              </Grid>
+
+              {/* Last Name */}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="Last Name"
+                  variant="outlined"
+                  {...register("lastname", { required: "Last name is required" })}
+                  value={values.lastname}
+                  onChange={handleChange('lastname')}
+                  error={!!errors.lastname}
+                  helperText={errors.lastname ? errors.lastname.message : ""}
+                />
+              </Grid>
+
+              {/* Email */}
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Email"
+                  type="email"
+                  variant="outlined"
+                  {...register("email", { required: "Email is required" })}
+                  value={values.email}
+                  onChange={handleChange('email')}
+                  error={!!errors.email}
+                  helperText={errors.email ? errors.email.message : ""}
+                />
+              </Grid>
+
+              {/* Completion Date */}
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Completion Date"
+                  variant="outlined"
+                  {...register("completion", { required: "Completion Date is required" })}
+                  value={values.completion}
+                  onChange={handleChange('completion')}
+                  error={!!errors.completion}
+                  helperText={errors.completion ? errors.completion.message : ""}
+                />
+              </Grid>
+
+              {/* Description */}
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Description"
+                  variant="outlined"
+                  {...register("description", { required: "Description is required" })}
+                  value={values.description}
+                  onChange={handleChange('description')}
+                  error={!!errors.description}
+                  helperText={errors.description ? errors.description.message : ""}
+                />
+              </Grid>
+
+              {/* Submit Button */}
+              <Grid item xs={12}>
+                <Button type="submit" variant="contained" color="primary" fullWidth>
+                  Submit
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </CardContent>
+      </Card>
+    </>
+  );
 }
