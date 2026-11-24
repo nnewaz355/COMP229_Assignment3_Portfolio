@@ -1,38 +1,154 @@
-// I had to enclose the content in table rows just to try to make the content look more organized and structured. I also added images for each project to make it visually appealing and provide a better understanding of the projects. The images are placed in the "src/assets" folder.
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { create } from '../project/api-project.js';
+import { Card, CardContent, Typography, TextField, Button, Grid } from '@mui/material';
+import '@fontsource/roboto/400.css';
+import projectn2 from '../src/assets/projectn2.jfif';
+
 export default function Project() {
-    return (
-        <div>
-            <table>
-            <tr>
-            <h1>Select Academic Projects:</h1>
-            <img src="src/assets/project1.png" className="img-projects" alt="A website for pet owners to book rooms for pets in a pet hotel" />
-            <h2>Web Interface Design</h2>
-            <emphasis>CSS, HTML</emphasis>
-            <ul>
-                <li>Designed a responsive website for pet owners to book rooms for pets using CSS and HTML</li>
-                <li>Created a scrolling image gallery and contact form; applied responsive design for web and mobile</li>
-            </ul>
-            <br></br>
-            </tr>
-            <tr>
-            <img src="src/assets/project2.png" className="img-projects" alt="A page of the Software Requirements Specification Document for Drop In At Cent" />
-            <h2>Software Requirements Specification Document </h2>
-            <emphasis>Drop In At Cent - Microsoft Word</emphasis>
-            <ul>
-                <li>Collaborated with a group of colleagues to write a comprehensive Software Requirements Specification for an interactive activity drop-in application</li>
-                <li>Defined functional and non-functional requirements, use case diagrams, use case formal descriptions, swim lane diagrams, and other analysis models</li>
-            </ul>
-            </tr>
-            <tr>
-            <img src="src/assets/project3.png" className="img-projects" alt="A database design for an online grocery shop" />
-            <h2>Online Grocery Shop Database </h2>
-            <emphasis>SQL</emphasis>
-            <ul>
-                <li>Engineered a normalized relational database schema to support e-commerce grocery operations</li>
-                <li>Developed and executed complex Oracle SQL queries, data constraints, and relational mappings</li>
-            </ul>
-            </tr>
-            </table>
-        </div>
-    );
+  const [values, setValues] = useState({
+    title: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    completion: "",
+    description: ""
+  });
+
+  // Destructuring methods from react-hook-form
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  // Submission function for the form
+  const submitForm = () => {
+    const project = {
+      title: values.title || undefined,
+      firstname: values.firstname || undefined,
+      lastname: values.lastname || undefined,
+      email: values.email || undefined,
+      completion: values.completion || undefined,
+      description: values.description || undefined,
+    };
+
+    console.log(project);
+    create(project);
+  };
+
+  const handleChange = name => event => {
+    setValues({ ...values, [name]: event.target.value });
+  };
+
+  return (
+    <>
+      <Typography variant="h4" align="center" gutterBottom>
+        Projects
+      </Typography>
+      <div style={{ textAlign: "center" }}>
+        <img src={projectn2} alt="Academic Qualification" className="worksImg" width={1500} height={80} />
+        <br /><br />
+      </div>
+      <Grid container justifyContent="center">
+        <Card style={{ maxWidth: 600, padding: "20px 5px", margin: "0 auto" }}>
+          <CardContent>
+            <form onSubmit={handleSubmit(submitForm)}>
+              <Grid container spacing={2}>
+                {/* Title */}
+                <Grid item xs={12}>
+                  <TextField
+                    label="Title"
+                    variant="outlined"
+                    fullWidth
+                    {...register("title", { required: "Title is required" })}
+                    value={values.title}
+                    onChange={handleChange('title')}
+                    error={!!errors.title}
+                    helperText={errors.title ? errors.title.message : ""}
+                  />
+                </Grid>
+
+                {/* First Name */}
+                <Grid item xs={12}>
+                  <TextField
+                    label="First Name"
+                    variant="outlined"
+                    fullWidth
+                    {...register("firstname", { required: "First name is required" })}
+                    value={values.firstname}
+                    onChange={handleChange('firstname')}
+                    error={!!errors.firstname}
+                    helperText={errors.firstname ? errors.firstname.message : ""}
+                  />
+                </Grid>
+
+                {/* Last Name */}
+                <Grid item xs={12}>
+                  <TextField
+                    label="Last Name"
+                    variant="outlined"
+                    fullWidth
+                    {...register("lastname", { required: "Last name is required" })}
+                    value={values.lastname}
+                    onChange={handleChange('lastname')}
+                    error={!!errors.lastname}
+                    helperText={errors.lastname ? errors.lastname.message : ""}
+                  />
+                </Grid>
+
+                {/* Email */}
+                <Grid item xs={12}>
+                  <TextField
+                    label="Email"
+                    variant="outlined"
+                    type="email"
+                    fullWidth
+                    {...register("email", { required: "Email is required" })}
+                    value={values.email}
+                    onChange={handleChange('email')}
+                    error={!!errors.email}
+                    helperText={errors.email ? errors.email.message : ""}
+                  />
+                </Grid>
+
+                {/* Completion Date */}
+                <Grid item xs={12}>
+                  <TextField
+                    label="Completion Date"
+                    variant="outlined"
+                    fullWidth
+                    {...register("completion", { required: "Completion Date is required" })}
+                    value={values.completion}
+                    onChange={handleChange('completion')}
+                    error={!!errors.completion}
+                    helperText={errors.completion ? errors.completion.message : ""}
+                  />
+                </Grid>
+
+                {/* Description */}
+                <Grid item xs={12}>
+                  <TextField
+                    label="Description"
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                    rows={4}
+                    {...register("description", { required: "Description is required" })}
+                    value={values.description}
+                    onChange={handleChange('description')}
+                    error={!!errors.description}
+                    helperText={errors.description ? errors.description.message : ""}
+                  />
+                </Grid>
+
+                {/* Submit Button */}
+                <Grid item xs={12}>
+                  <Button type="submit" variant="contained" color="primary" fullWidth>
+                    Submit
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </CardContent>
+        </Card>
+      </Grid>
+    </>
+  );
 }
