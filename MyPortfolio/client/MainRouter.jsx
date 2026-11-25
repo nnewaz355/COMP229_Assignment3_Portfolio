@@ -7,6 +7,8 @@ import Education from './src/education'
 import Project from './src/project'
 import Service from './src/service'
 import Layout from './components/Layout'
+import Users from './user/Users.jsx'
+import Signup from './user/Signup.jsx'
 
 
 const MainRouter = () => {
