@@ -9,24 +9,26 @@ import Service from './src/service'
 import Layout from './components/Layout'
 import Users from './user/Users.jsx'
 import Signup from './user/Signup.jsx'
+import Signin from './lib/Signin.jsx'
 
 
 const MainRouter = () => {
- return (<div>
-     <Layout/>
+    return (<div>
+        <Layout />
 
-<Routes>
-<Route exact path="/" element={<Home />} />
-<Route exact path="/about" element={<About />} />
-<Route exact path="/education" element={<Education />} />
-<Route exact path="/project" element={<Project />} />
-<Route exact path="/contact" element={<Contact />} />
-<Route exact path="/service" element={<Service />} />
-<Route path="/users" element={<Users/>}/>
-<Route path="/signup" element={<Signup/>}/>
+        <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/about" element={<About />} />
+            <Route exact path="/education" element={<Education />} />
+            <Route exact path="/project" element={<Project />} />
+            <Route exact path="/contact" element={<Contact />} />
+            <Route exact path="/service" element={<Service />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
 
-</Routes>
-</div>
-)
+        </Routes>
+    </div>
+    )
 }
 export default MainRouter
