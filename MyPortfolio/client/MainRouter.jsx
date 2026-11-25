@@ -20,6 +20,7 @@ const MainRouter = () => {
 <Route exact path="/project" element={<Project />} />
 <Route exact path="/contact" element={<Contact />} />
 <Route exact path="/service" element={<Service />} />
+<Route path="/users" element={<Users/>}/>
 
 </Routes>
 </div>
