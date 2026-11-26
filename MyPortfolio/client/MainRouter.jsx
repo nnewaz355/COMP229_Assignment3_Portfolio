@@ -11,6 +11,7 @@ import Signup from './user/Signup.jsx'
 import Signin from './lib/Signin.jsx'
 import PrivateRoute from './lib/PrivateRoute.jsx'
 import EditProfile from './user/EditProfile.jsx'
+import Profile from './user/Profile.jsx'
 import Menu from './core/Menu.jsx'
 
 function MainRouter() {
