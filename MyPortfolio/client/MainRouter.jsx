@@ -26,6 +26,7 @@ const MainRouter = () => {
             <Route path="/users" element={<Users />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
+            <Route path="/user/:userId" element={<Profile />}/>
 
         </Routes>
     </div>
