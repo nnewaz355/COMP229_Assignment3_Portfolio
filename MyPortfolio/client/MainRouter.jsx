@@ -1,4 +1,3 @@
-import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Home from './core/Home'
 import About from './src/about'
@@ -30,7 +29,14 @@ function MainRouter() {
                 <Route path="/users" element={<Users />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signin" element={<Signin />} />
-                <PrivateRoute path="/user/edit/:userId" element={EditProfile} />
+                <Route
+                    path="/user/edit/:userId"
+                    element={
+                        <PrivateRoute>
+                            <EditProfile />
+                        </PrivateRoute>
+                    }
+                />
                 <Route path="/user/:userId" element={<Profile />} />
 
             </Routes>
