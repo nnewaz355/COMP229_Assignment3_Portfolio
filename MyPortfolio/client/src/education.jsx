@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { create } from '../qualification/api-qualification.js';
 import academic from '../src/assets/academic.jfif';
-import '../src/education.css';
+//import '../src/education.css';
 import { Card, CardContent, Typography, TextField, Button, Grid } from '@mui/material';
 import '@fontsource/roboto/400.css';
 
