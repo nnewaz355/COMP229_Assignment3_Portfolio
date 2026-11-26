@@ -13,7 +13,6 @@ import PrivateRoute from './lib/PrivateRoute.jsx'
 import EditProfile from './user/EditProfile.jsx'
 import Menu from './core/Menu.jsx'
 
-import Menu from './core/Menu'
 function MainRouter() {
     return (
         <div>
