@@ -1,17 +1,17 @@
-const create = async (params, credentials, project) => {
-    try {
-        let response = await fetch("/api/projects/" + params.userId, {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                Authorization: "Bearer " + credentials.t,
-            },
-            body: project,
-        });
-        return response.json();
-    } catch (err) {
-        console.log(err);
+const create = async (project) => {
+    const response = await fetch("/api/projects", {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(project),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.error || data.message || "Could not create project");
     }
+    return data;
 };
 const list = async (signal) => {
     try {

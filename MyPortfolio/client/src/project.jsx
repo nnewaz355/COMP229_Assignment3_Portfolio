@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { create } from '../project/api-project.js';
 import { Card, CardContent, Typography, TextField, Button, Grid } from '@mui/material';
@@ -12,25 +12,43 @@ export default function Project() {
     lastname: "",
     email: "",
     completion: "",
-    description: ""
+    description: "",
+    error: "",
   });
 
   // Destructuring methods from react-hook-form
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   // Submission function for the form
-  const submitForm = () => {
+  const submitForm = async () => {
     const project = {
-      title: values.title || undefined,
-      firstname: values.firstname || undefined,
-      lastname: values.lastname || undefined,
-      email: values.email || undefined,
-      completion: values.completion || undefined,
-      description: values.description || undefined,
+      title: values.title,
+      firstname: values.firstname,
+      lastname: values.lastname,
+      email: values.email,
+      completion: values.completion,
+      description: values.description,
     };
 
-    console.log(project);
-    create(project);
+    try {
+      const data = await create(project);
+      if (data?.error) {
+        setValues((current) => ({ ...current, error: data.error }));
+        return;
+      }
+
+      setValues({
+        title: "",
+        firstname: "",
+        lastname: "",
+        email: "",
+        completion: "",
+        description: "",
+        error: "",
+      });
+    } catch (error) {
+      setValues((current) => ({ ...current, error: error.message }));
+    }
   };
 
   const handleChange = name => event => {
@@ -51,6 +69,13 @@ export default function Project() {
           <CardContent>
             <form onSubmit={handleSubmit(submitForm)}>
               <Grid container spacing={2}>
+                {values.error && (
+                  <Grid item xs={12}>
+                    <Typography color="error" role="alert">
+                      {values.error}
+                    </Typography>
+                  </Grid>
+                )}
                 {/* Title */}
                 <Grid item xs={12}>
                   <TextField
