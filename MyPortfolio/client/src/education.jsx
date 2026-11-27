@@ -18,11 +18,23 @@ export default function Qualification() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const submitForm = async (data) => {
-    console.log(data);
+  const submitForm = async () => {
+    const qualification = {
+      title: values.title,
+      firstname: values.firstname,
+      lastname: values.lastname,
+      email: values.email,
+      completion: values.completion,
+      description: values.description,
+    };
+
     try {
-      await create(data);
-      // Reset form values after successful submission
+      const data = await create(qualification);
+      if (data?.error) {
+        setValues((current) => ({ ...current, error: data.error }));
+        return;
+      }
+
       setValues({
         title: "",
         firstname: "",
@@ -30,9 +42,10 @@ export default function Qualification() {
         email: "",
         completion: "",
         description: "",
+        error: "",
       });
     } catch (error) {
-      console.error('Error submitting form:', error);
+      setValues((current) => ({ ...current, error: error.message }));
     }
   };
 
