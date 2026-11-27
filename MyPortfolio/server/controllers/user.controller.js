@@ -2,7 +2,7 @@ import User from "../models/user.model.js";
 import extend from "lodash/extend.js";
 import errorHandler from "./error.controller.js";
 const create = async (req, res) => {
-    const user = new User(req.body);
+    const user = new User({ ...req.body, role: "user" });
     try {
         await user.save();
         return res.status(200).json({
