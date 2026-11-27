@@ -1,10 +1,17 @@
 const create = async (qualification) => {
+    const session = JSON.parse(sessionStorage.getItem("jwt") || "null");
+
+    const headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        ...(session?.token && {
+            Authorization: `Bearer ${session.token}`,
+        }),
+    };
+
     const response = await fetch("/api/qualifications", {
         method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify(qualification),
     });
     const data = await response.json();
