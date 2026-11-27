@@ -1,17 +1,17 @@
-const create = async (params, credentials, contact) => {
-    try {
-        let response = await fetch("/api/contacts/" + params.userId, {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                Authorization: "Bearer " + credentials.t,
-            },
-            body: contact,
-        });
-        return response.json();
-    } catch (err) {
-        console.log(err);
+const create = async (contact) => {
+    const response = await fetch("/api/contacts", {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(contact),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.error || data.message || "Could not create contact");
     }
+    return data;
 };
 const list = async (signal) => {
     try {
