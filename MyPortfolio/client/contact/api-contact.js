@@ -1,10 +1,17 @@
 const create = async (contact) => {
+    const session = JSON.parse(sessionStorage.getItem("jwt") || "null");
+
+    const headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        ...(session?.token && {
+            Authorization: `Bearer ${session.token}`,
+        }),
+    };
+
     const response = await fetch("/api/contacts", {
         method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify(contact),
     });
     const data = await response.json();
