@@ -39,6 +39,21 @@ const requireSignin = expressjwt({
     algorithms: ["HS256"],
     userProperty: 'auth'
 })
+
+const requireAdmin = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.auth._id).select("role");
+
+        if (!user || user.role !== "Admin") {
+            return res.status(403).json({ error: "Admin access required" });
+        }
+
+        next();
+    } catch (error) {
+        next(error);
+    }
+};
+
 const hasAuthorization = (req, res, next) => {
     const authorized = req.profile && req.auth
         && req.profile._id == req.auth._id
@@ -49,5 +64,5 @@ const hasAuthorization = (req, res, next) => {
     }
     next()
 }
-export default { signin, signout, requireSignin, hasAuthorization }
+export default { signin, signout, requireSignin, requireAdmin, hasAuthorization }
 
