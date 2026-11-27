@@ -13,21 +13,29 @@ export default function Contact() {
         email: "",
     });
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const submitForm = async (data) => {
-        console.log(data);
-        try {
-            await create(data);
-            // Reset form values after submission
-            setValues({
-                firstname: "",
-                lastname: "",
-                email: "",
-            });
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            // Optionally handle the error
-        }
+    const submitForm = async () => {
+    const contact = {
+      firstname: values.firstname,
+      lastname: values.lastname,
+      email: values.email,
     };
+
+    try {
+      const data = await create(contact);
+      if (data?.error) {
+        setValues((current) => ({ ...current, error: data.error }));
+        return;
+      }
+
+      setValues({
+        firstname: "",
+        lastname: "",
+        email: ""
+      });
+    } catch (error) {
+      setValues((current) => ({ ...current, error: error.message }));
+    }
+  };
     const handleChange = (name) => (event) => {
         setValues({ ...values, [name]: event.target.value });
     };
