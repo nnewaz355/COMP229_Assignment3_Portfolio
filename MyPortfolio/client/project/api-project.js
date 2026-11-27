@@ -1,10 +1,17 @@
 const create = async (project) => {
+    const session = JSON.parse(sessionStorage.getItem("jwt") || "null");
+
+    const headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        ...(session?.token && {
+            Authorization: `Bearer ${session.token}`,
+        }),
+    };
+
     const response = await fetch("/api/projects", {
         method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify(project),
     });
     const data = await response.json();
